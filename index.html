@@ -4,99 +4,167 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>2B Luxury Concrete Art | Premium Concrete Design</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* CSS Variables */
-    :root {
-      --gold: #C9A96E;
-      --dark: #1A1A1A;
-      --gray: #2D2D2D;
-      --light: #F5F5F5;
-      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#C9A96E',
+            dark: '#1A1A1A',
+            gray: {
+              750: '#2D2D2D',
+            },
+            light: '#F5F5F5',
+          },
+          fontFamily: {
+            'cormorant': ['Cormorant Garamond', 'serif'],
+            'inter': ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'fade-up': 'fadeUp 1s ease-out',
+            'bounce': 'bounce 2s infinite',
+            'tile-move': 'tileMove 15s linear infinite',
+            'tile-pulse': 'tilePulse 8s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            bounce: {
+              '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0) translateX(-50%)' },
+              '40%': { transform: 'translateY(-10px) translateX(-50%)' },
+              '60%': { transform: 'translateY(-5px) translateX(-50%)' },
+            },
+            tileMove: {
+              '0%': { transform: 'translateX(0) translateY(0)' },
+              '100%': { transform: 'translateX(-100px) translateY(-50px)' },
+            },
+            tilePulse: {
+              '0%, 100%': { opacity: '0.7' },
+              '50%': { opacity: '0.9' },
+            }
+          }
+        }
+      }
     }
-
-    /* Reset & Base Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+  </script>
+  
+  <style type="text/css">
     html {
       scroll-behavior: smooth;
     }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--light);
-      color: var(--dark);
-      overflow-x: hidden;
-      line-height: 1.6;
+    
+    /* Concrete tile background */
+    .concrete-tiles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.03) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.03) 75%);
+      background-size: 100px 100px;
+      background-position: 0 0, 0 50px, 50px -50px, -50px 0px;
+      animation: tileMove 20s linear infinite;
+      z-index: 0;
     }
-
-    h1, h2, h3, h4, h5 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      line-height: 1.2;
+    
+    /* Additional texture overlay */
+    .texture-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(201, 169, 110, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201, 169, 110, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+      animation: tilePulse 12s ease-in-out infinite;
+      z-index: 0;
     }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-padding {
-      padding: 6rem 0;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      position: relative;
-    }
-
-    .section-title::after {
+    
+    /* Custom styles for elements that need more specific control */
+    .service-card::before {
       content: '';
       position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 0;
+      background-color: #C9A96E;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .service-card:hover::before {
+      height: 100%;
+    }
+    
+    .about-image::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid #C9A96E;
+      z-index: -1;
+    }
+    
+    @media (max-width: 768px) {
+      .about-image::before {
+        top: -10px;
+        left: -10px;
+      }
+    }
+    
+    .testimonial-text::before,
+    .testimonial-text::after {
+      content: '"';
+      font-size: 4rem;
+      color: #C9A96E;
+      position: absolute;
+      opacity: 0.3;
+    }
+    
+    .testimonial-text::before {
+      top: -20px;
+      left: -20px;
+    }
+    
+    .testimonial-text::after {
+      bottom: -40px;
+      right: -20px;
+    }
+    
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
       height: 2px;
-      background-color: var(--gold);
+      background-color: #C9A96E;
     }
-
-    .btn {
-      display: inline-block;
-      padding: 1rem 2.5rem;
-      background-color: var(--gold);
-      color: var(--dark);
-      border: none;
-      border-radius: 0;
-      font-weight: 500;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
+    
+    @media (max-width: 768px) {
+      .footer-col h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
-
+    
     .btn::before {
       content: '';
       position: absolute;
@@ -105,71 +173,14 @@
       width: 100%;
       height: 100%;
       background: rgba(255,255,255,0.2);
-      transition: var(--transition);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       z-index: -1;
     }
-
+    
     .btn:hover::before {
       left: 100%;
     }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 1.5rem 0;
-      background-color: rgba(26, 26, 26, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      transition: var(--transition);
-    }
-
-    header.scrolled {
-      padding: 1rem 0;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    }
-
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--light);
-      letter-spacing: 1px;
-    }
-
-    .logo span {
-      color: var(--gold);
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-    }
-
-    nav li {
-      margin-left: 2rem;
-    }
-
-    nav a {
-      color: var(--light);
-      font-weight: 400;
-      position: relative;
-      padding: 0.5rem 0;
-    }
-
+    
     nav a::after {
       content: '';
       position: absolute;
@@ -177,822 +188,203 @@
       left: 0;
       width: 0;
       height: 1px;
-      background-color: var(--gold);
-      transition: var(--transition);
+      background-color: #C9A96E;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-
-    nav a:hover {
-      color: var(--gold);
-    }
-
+    
     nav a:hover::after {
       width: 100%;
     }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--light);
-      font-size: 1.5rem;
-      cursor: pointer;
-      z-index: 1001;
-    }
-
-    /* Hero Section */
-    .hero {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.7)), 
-                  url('https://images.unsplash.com/photo-1600585154340-6f67677b3759?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
-      color: var(--light);
-      text-align: center;
-    }
-
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-      animation: fadeUp 1s ease-out;
-    }
-
-    .hero h1 {
-      font-size: 4rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.1;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 2.5rem;
-      color: rgba(255,255,255,0.8);
-    }
-
-    .hero .btn {
-      background-color: transparent;
-      border: 1px solid var(--gold);
-      color: var(--light);
-    }
-
-    .hero .btn:hover {
-      background-color: var(--gold);
-      color: var(--dark);
-    }
-
-    .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: bounce 2s infinite;
-    }
-
-    .scroll-indicator i {
-      font-size: 1.5rem;
-      color: var(--light);
-    }
-
-    /* About Section */
-    .about {
-      background-color: var(--light);
-    }
-
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .about-text h2 {
-      margin-bottom: 1.5rem;
-    }
-
-    .about-text p {
-      margin-bottom: 1.5rem;
-      color: var(--gray);
-    }
-
-    .about-image {
-      position: relative;
-    }
-
-    .about-image::before {
-      content: '';
-      position: absolute;
-      top: -20px;
-      left: -20px;
-      width: 100%;
-      height: 100%;
-      border: 2px solid var(--gold);
-      z-index: -1;
-    }
-
-    .about-image img {
-      display: block;
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-    }
-
-    /* Services Section */
-    .services {
-      background-color: var(--dark);
-      color: var(--light);
-    }
-
-    .services .section-title {
-      color: var(--light);
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
-    .service-card {
-      background-color: var(--gray);
-      padding: 2.5rem;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 5px;
-      height: 0;
-      background-color: var(--gold);
-      transition: var(--transition);
-    }
-
-    .service-card:hover::before {
-      height: 100%;
-    }
-
-    .service-card:hover {
-      transform: translateY(-10px);
-    }
-
-    .service-icon {
-      font-size: 2.5rem;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-    }
-
-    .service-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .service-card p {
-      color: rgba(255,255,255,0.7);
-    }
-
-    /* Gallery Section */
-    .gallery {
-      background-color: var(--light);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      height: 300px;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: var(--transition);
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.05);
-    }
-
-    .gallery-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(26, 26, 26, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: var(--transition);
-    }
-
-    .gallery-item:hover .gallery-overlay {
-      opacity: 1;
-    }
-
-    .gallery-overlay-content {
-      text-align: center;
-      color: var(--light);
-      transform: translateY(20px);
-      transition: var(--transition);
-    }
-
-    .gallery-item:hover .gallery-overlay-content {
-      transform: translateY(0);
-    }
-
-    .gallery-overlay h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .gallery-overlay p {
-      color: rgba(255,255,255,0.8);
-    }
-
-    /* Testimonials Section */
-    .testimonials {
-      background-color: var(--gray);
-      color: var(--light);
-    }
-
-    .testimonials .section-title {
-      color: var(--light);
-    }
-
-    .testimonials-slider {
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .testimonial {
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .testimonial-text {
-      font-size: 1.2rem;
-      font-style: italic;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .testimonial-text::before,
-    .testimonial-text::after {
-      content: '"';
-      font-size: 4rem;
-      color: var(--gold);
-      position: absolute;
-      opacity: 0.3;
-    }
-
-    .testimonial-text::before {
-      top: -20px;
-      left: -20px;
-    }
-
-    .testimonial-text::after {
-      bottom: -40px;
-      right: -20px;
-    }
-
-    .testimonial-author {
-      font-weight: 600;
-      color: var(--gold);
-    }
-
-    /* Contact Section */
-    .contact {
-      background-color: var(--light);
-    }
-
-    .contact-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-
-    .contact-info h3 {
-      margin-bottom: 1.5rem;
-    }
-
-    .contact-details {
-      margin-bottom: 2rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 1.5rem;
-    }
-
-    .contact-icon {
-      width: 40px;
-      height: 40px;
-      background-color: var(--gold);
-      color: var(--dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 1rem;
-      flex-shrink: 0;
-    }
-
-    .contact-text h4 {
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid #ddd;
-      background-color: transparent;
-      font-family: 'Inter', sans-serif;
-      transition: var(--transition);
-    }
-
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      outline: none;
-      border-color: var(--gold);
-    }
-
-    .contact-form textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    /* Footer */
-    footer {
-      background-color: var(--dark);
-      color: var(--light);
-      padding: 4rem 0 2rem;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
-
-    .footer-col h4 {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
-
-    .footer-col h4::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 40px;
-      height: 2px;
-      background-color: var(--gold);
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-
-    .footer-links li {
-      margin-bottom: 0.8rem;
-    }
-
-    .footer-links a {
-      color: rgba(255,255,255,0.7);
-    }
-
-    .footer-links a:hover {
-      color: var(--gold);
-      padding-left: 5px;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .social-links a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background-color: var(--gray);
-      color: var(--light);
-      border-radius: 50%;
-      transition: var(--transition);
-    }
-
-    .social-links a:hover {
-      background-color: var(--gold);
-      color: var(--dark);
-      transform: translateY(-5px);
-    }
-
-    .copyright {
-      text-align: center;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
-      font-size: 0.9rem;
-    }
-
-    /* Animations */
-    @keyframes fadeUp {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0) translateX(-50%);
-      }
-      40% {
-        transform: translateY(-10px) translateX(-50%);
-      }
-      60% {
-        transform: translateY(-5px) translateX(-50%);
-      }
-    }
-
-    /* Responsive Styles */
-    @media (max-width: 1200px) {
-      .hero h1 {
-        font-size: 3.5rem;
-      }
-    }
-
-    @media (max-width: 992px) {
-      .hero h1 {
-        font-size: 3rem;
-      }
-      
-      .about-content,
-      .contact-container {
-        grid-template-columns: 1fr;
-      }
-      
-      .about-image {
-        order: -1;
-      }
-      
-      .section-title {
-        font-size: 2.2rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        height: 100vh;
-        background-color: var(--dark);
-        padding: 2rem;
-        transition: var(--transition);
-        z-index: 999;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      
-      nav.active {
-        right: 0;
-      }
-      
-      nav ul {
-        flex-direction: column;
-        margin-top: 3rem;
-        width: 100%;
-      }
-      
-      nav li {
-        margin: 1rem 0;
-        width: 100%;
-        text-align: center;
-      }
-      
-      .close-menu {
-        position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
-        background: none;
-        border: none;
-        color: var(--light);
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-      
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      
-      .section-title {
-        font-size: 2rem;
-      }
-      
-      .section-padding {
-        padding: 4rem 0;
-      }
-      
-      .about-image::before {
-        top: -10px;
-        left: -10px;
-      }
-      
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .gallery-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .contact-container {
-        gap: 2rem;
-      }
-      
-      .footer-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      
-      .footer-col h4::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      
-      .social-links {
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
-      
-      .hero p {
-        font-size: 1rem;
-      }
-      
-      .section-title {
-        font-size: 1.8rem;
-      }
-      
-      .section-padding {
-        padding: 3rem 0;
-      }
-      
-      .btn {
-        padding: 0.8rem 2rem;
-      }
-      
-      .service-card {
-        padding: 1.5rem;
-      }
-      
-      .gallery-item {
-        height: 250px;
-      }
-      
-      .contact-item {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .contact-icon {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
-      }
-    }
   </style>
 </head>
-<body>
+<body class="font-inter bg-light text-dark overflow-x-hidden">
   <!-- Header -->
-  <header id="header">
-    <div class="container header-container">
-      <a href="#" class="logo">2B <span>Luxury</span> Concrete Art</a>
-      <button class="mobile-menu-btn">
+  <header id="header" class="fixed top-0 left-0 w-full py-6 bg-dark/95 backdrop-blur z-50 transition-all duration-400">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <a href="#" class="logo font-cormorant text-2xl font-bold text-light tracking-wide">2B <span class="text-gold">Luxury</span> Concrete Art</a>
+      <button class="mobile-menu-btn md:hidden text-light text-xl z-50">
         <i class="fas fa-bars"></i>
       </button>
-      <nav>
-        <button class="close-menu">
+      <nav class="fixed md:static top-0 right-[-100%] md:right-0 w-4/5 md:w-auto h-screen md:h-auto bg-dark md:bg-transparent p-8 md:p-0 transition-all duration-400 z-40 flex flex-col md:flex-row justify-center md:justify-start">
+        <button class="close-menu absolute top-6 right-6 md:hidden text-light text-xl">
           <i class="fas fa-times"></i>
         </button>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#contact">Contact</a></li>
+        <ul class="flex flex-col md:flex-row mt-12 md:mt-0 w-full md:w-auto text-center md:text-left">
+          <li class="my-4 md:my-0 md:ml-8 w-full md:w-auto"><a href="#home" class="text-light font-normal relative py-2 block md:inline-block hover:text-gold">Home</a></li>
+          <li class="my-4 md:my-0 md:ml-8 w-full md:w-auto"><a href="#about" class="text-light font-normal relative py-2 block md:inline-block hover:text-gold">About</a></li>
+          <li class="my-4 md:my-0 md:ml-8 w-full md:w-auto"><a href="#services" class="text-light font-normal relative py-2 block md:inline-block hover:text-gold">Services</a></li>
+          <li class="my-4 md:my-0 md:ml-8 w-full md:w-auto"><a href="#testimonials" class="text-light font-normal relative py-2 block md:inline-block hover:text-gold">Testimonials</a></li>
+          <li class="my-4 md:my-0 md:ml-8 w-full md:w-auto"><a href="#contact" class="text-light font-normal relative py-2 block md:inline-block hover:text-gold">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <div class="container hero-content">
-      <h1>Luxury Concrete Redefined</h1>
-      <p>We craft bespoke concrete art pieces that combine strength with elegance, elevating spaces into contemporary galleries.</p>
-      <a href="#contact" class="btn">Start Your Project</a>
+  <!-- Hero Section with Animated Concrete Tiles -->
+  <section class="hero h-screen flex items-center relative text-light text-center overflow-hidden" id="home">
+    <!-- Concrete tile background -->
+    <div class="concrete-tiles"></div>
+    
+    <!-- Additional texture overlay -->
+    <div class="texture-overlay"></div>
+    
+    <!-- Dark overlay for better text contrast -->
+    <div class="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/50 to-dark/70 z-0"></div>
+    
+    <!-- Background image (fallback) -->
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat z-0" style="background-image: url('https://images.unsplash.com/photo-1600585154340-6f67677b3759?auto=format&fit=crop&w=1600&q=80')"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-4xl mx-auto animate-fade-up">
+        <h1 class="font-cormorant text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">Luxury Concrete Redefined</h1>
+        <p class="text-lg md:text-xl mb-10 text-light/80">We craft bespoke concrete art pieces that combine strength with elegance, elevating spaces into contemporary galleries.</p>
+        <a href="#contact" class="btn inline-block py-4 px-10 bg-transparent border border-gold text-light font-medium tracking-wide relative overflow-hidden z-10 hover:bg-gold hover:text-dark transition-all duration-400 hover:-translate-y-1 hover:shadow-lg">Start Your Project</a>
+      </div>
     </div>
-    <div class="scroll-indicator">
-      <i class="fas fa-chevron-down"></i>
+    <div class="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10">
+      <i class="fas fa-chevron-down text-light text-2xl"></i>
     </div>
   </section>
 
   <!-- About Section -->
-  <section class="about section-padding" id="about">
-    <div class="container">
-      <h2 class="section-title">About Us</h2>
-      <div class="about-content">
-        <div class="about-text">
-          <h2>Crafting Excellence Since 2024</h2>
-          <p>Founded in 2024, 2B Luxury Concrete Art Inc specializes in premium concrete art pieces. We transform raw concrete into sculptural masterpieces, blending modern design with architectural sophistication.</p>
-          <p>Our team of skilled artisans combines traditional craftsmanship with innovative techniques to create unique pieces that redefine luxury concrete design.</p>
-          <a href="#gallery" class="btn">View Our Work</a>
+  <section class="about py-16 md:py-24 bg-light" id="about">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title font-cormorant text-3xl md:text-4xl text-center mb-12 relative">About Us</h2>
+      <div class="about-content grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div class="about-text order-2 lg:order-1">
+          <h2 class="font-cormorant text-2xl md:text-3xl mb-6">Crafting Excellence Since 2024</h2>
+          <p class="text-gray-750 mb-6">Founded in 2024, 2B Luxury Concrete Art Inc specializes in premium concrete art pieces. We transform raw concrete into sculptural masterpieces, blending modern design with architectural sophistication.</p>
+          <p class="text-gray-750 mb-8">Our team of skilled artisans combines traditional craftsmanship with innovative techniques to create unique pieces that redefine luxury concrete design.</p>
+          <a href="#contact" class="btn inline-block py-4 px-10 bg-gold text-dark font-medium tracking-wide relative overflow-hidden z-10 hover:-translate-y-1 hover:shadow-lg transition-all duration-400">Get In Touch</a>
         </div>
-        <div class="about-image">
-          <img src="https://images.unsplash.com/photo-1581093458791-8a0a1ee7d911?auto=format&fit=crop&w=800&q=80" alt="Concrete Art">
-        </div>
+      
       </div>
     </div>
   </section>
 
   <!-- Services Section -->
-  <section class="services section-padding" id="services">
-    <div class="container">
-      <h2 class="section-title">Our Services</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">
+  <section class="services py-16 md:py-24 bg-dark text-light" id="services">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title font-cormorant text-3xl md:text-4xl text-center mb-12 relative text-light">Our Services</h2>
+      <div class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="service-card bg-gray-750 p-8 md:p-10 transition-all duration-500 relative overflow-hidden hover:-translate-y-2">
+          <div class="service-icon text-gold text-4xl mb-6">
             <i class="fas fa-couch"></i>
           </div>
-          <h3>Custom Concrete Furniture</h3>
-          <p>Handcrafted tables, benches, and seating that serve as functional art pieces for residential and commercial spaces.</p>
+          <h3 class="font-cormorant text-xl md:text-2xl mb-4">Custom Concrete Furniture</h3>
+          <p class="text-light/70">Handcrafted tables, benches, and seating that serve as functional art pieces for residential and commercial spaces.</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon">
+        <div class="service-card bg-gray-750 p-8 md:p-10 transition-all duration-500 relative overflow-hidden hover:-translate-y-2">
+          <div class="service-icon text-gold text-4xl mb-6">
             <i class="fas fa-monument"></i>
           </div>
-          <h3>Concrete Sculptures</h3>
-          <p>Unique installations for indoor and outdoor luxury spaces, creating focal points that inspire and captivate.</p>
+          <h3 class="font-cormorant text-xl md:text-2xl mb-4">Concrete Sculptures</h3>
+          <p class="text-light/70">Unique installations for indoor and outdoor luxury spaces, creating focal points that inspire and captivate.</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon">
+        <div class="service-card bg-gray-750 p-8 md:p-10 transition-all duration-500 relative overflow-hidden hover:-translate-y-2">
+          <div class="service-icon text-gold text-4xl mb-6">
             <i class="fas fa-building"></i>
           </div>
-          <h3>Architectural Elements</h3>
-          <p>Modern concrete accents and structural features for premium interiors, blending form and function seamlessly.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery Section -->
-  <section class="gallery section-padding" id="gallery">
-    <div class="container">
-      <h2 class="section-title">Our Gallery</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1592878824953-5d7c5d9e0a08?auto=format&fit=crop&w=800&q=80" alt="Concrete Art 1">
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <h3>Minimalist Table</h3>
-              <p>Custom concrete dining table</p>
-            </div>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1616628187922-d3f4c8e1b573?auto=format&fit=crop&w=800&q=80" alt="Concrete Art 2">
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <h3>Geometric Sculpture</h3>
-              <p>Outdoor concrete installation</p>
-            </div>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1616628187916-8f9f6ec5e3a7?auto=format&fit=crop&w=800&q=80" alt="Concrete Art 3">
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <h3>Textured Wall Panel</h3>
-              <p>Architectural concrete feature</p>
-            </div>
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1602087665293-fd2d63ec8f15?auto=format&fit=crop&w=800&q=80" alt="Concrete Art 4">
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <h3>Concrete Bench</h3>
-              <p>Garden seating element</p>
-            </div>
-          </div>
+          <h3 class="font-cormorant text-xl md:text-2xl mb-4">Architectural Elements</h3>
+          <p class="text-light/70">Modern concrete accents and structural features for premium interiors, blending form and function seamlessly.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Testimonials Section -->
-  <section class="testimonials section-padding">
-    <div class="container">
-      <h2 class="section-title">Client Testimonials</h2>
-      <div class="testimonials-slider">
-        <div class="testimonial">
-          <div class="testimonial-text">
+  <section class="testimonials py-16 md:py-24 bg-gray-750 text-light" id="testimonials">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title font-cormorant text-3xl md:text-4xl text-center mb-12 relative text-light">Client Testimonials</h2>
+      <div class="testimonials-slider max-w-4xl mx-auto relative">
+        <div class="testimonial text-center p-8">
+          <div class="testimonial-text text-lg md:text-xl italic mb-8 relative">
             <p>The concrete dining table we commissioned from 2B Luxury Concrete Art has become the centerpiece of our home. The craftsmanship is exceptional, and the design perfectly captures the modern aesthetic we were looking for.</p>
           </div>
-          <div class="testimonial-author">- Sarah Johnson, Interior Designer</div>
+          <div class="testimonial-author font-semibold text-gold">- Sarah Johnson, Interior Designer</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="process py-16 md:py-24 bg-light">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title font-cormorant text-3xl md:text-4xl text-center mb-12 relative">Our Process</h2>
+      <div class="process-steps grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="process-step text-center p-6">
+          <div class="step-number w-16 h-16 bg-gold text-dark flex items-center justify-center rounded-full mx-auto mb-6 text-xl font-bold">1</div>
+          <h3 class="font-cormorant text-xl mb-4">Consultation</h3>
+          <p class="text-gray-750">We begin with an in-depth consultation to understand your vision, space requirements, and design preferences.</p>
+        </div>
+        <div class="process-step text-center p-6">
+          <div class="step-number w-16 h-16 bg-gold text-dark flex items-center justify-center rounded-full mx-auto mb-6 text-xl font-bold">2</div>
+          <h3 class="font-cormorant text-xl mb-4">Design & Planning</h3>
+          <p class="text-gray-750">Our designers create custom concepts and detailed plans that bring your vision to life with precision.</p>
+        </div>
+        <div class="process-step text-center p-6">
+          <div class="step-number w-16 h-16 bg-gold text-dark flex items-center justify-center rounded-full mx-auto mb-6 text-xl font-bold">3</div>
+          <h3 class="font-cormorant text-xl mb-4">Fabrication & Installation</h3>
+          <p class="text-gray-750">Our artisans handcraft your piece with meticulous attention to detail, followed by professional installation.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section class="contact section-padding" id="contact">
-    <div class="container">
-      <h2 class="section-title">Contact Us</h2>
-      <div class="contact-container">
+  <section class="contact py-16 md:py-24 bg-light" id="contact">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title font-cormorant text-3xl md:text-4xl text-center mb-12 relative">Contact Us</h2>
+      <div class="contact-container grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
         <div class="contact-info">
-          <h3>Get In Touch</h3>
-          <p>Ready to transform your space with our luxury concrete art? Contact us to discuss your project.</p>
+          <h3 class="font-cormorant text-2xl mb-6">Get In Touch</h3>
+          <p class="mb-8">Ready to transform your space with our luxury concrete art? Contact us to discuss your project.</p>
           
-          <div class="contact-details">
-            <div class="contact-item">
-              <div class="contact-icon">
+          <div class="contact-details mb-8">
+            <div class="contact-item flex items-start mb-6">
+              <div class="contact-icon w-10 h-10 bg-gold text-dark flex items-center justify-center mr-4 flex-shrink-0">
                 <i class="fas fa-map-marker-alt"></i>
               </div>
               <div class="contact-text">
-                <h4>Our Location</h4>
+                <h4 class="font-semibold mb-2">Our Location</h4>
                 <p>7030 Forbes Ave, Van Nuys, CA 91406, United States</p>
               </div>
             </div>
-            <div class="contact-item">
-              <div class="contact-icon">
+            <div class="contact-item flex items-start mb-6">
+              <div class="contact-icon w-10 h-10 bg-gold text-dark flex items-center justify-center mr-4 flex-shrink-0">
                 <i class="fas fa-phone"></i>
               </div>
               <div class="contact-text">
-                <h4>Phone Number</h4>
+                <h4 class="font-semibold mb-2">Phone Number</h4>
                 <p>+1 (818) 555-1234</p>
               </div>
             </div>
-            <div class="contact-item">
-              <div class="contact-icon">
+            <div class="contact-item flex items-start mb-6">
+              <div class="contact-icon w-10 h-10 bg-gold text-dark flex items-center justify-center mr-4 flex-shrink-0">
                 <i class="fas fa-envelope"></i>
               </div>
               <div class="contact-text">
-                <h4>Email Address</h4>
+                <h4 class="font-semibold mb-2">Email Address</h4>
                 <p>info@2bluxuryconcrete.com</p>
               </div>
             </div>
           </div>
           
-          <div class="social-links">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-pinterest"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <div class="social-links flex gap-4">
+            <a href="#" class="w-10 h-10 bg-gray-750 text-light rounded-full flex items-center justify-center transition-all duration-400 hover:bg-gold hover:text-dark hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="w-10 h-10 bg-gray-750 text-light rounded-full flex items-center justify-center transition-all duration-400 hover:bg-gold hover:text-dark hover:-translate-y-1"><i class="fab fa-pinterest"></i></a>
+            <a href="#" class="w-10 h-10 bg-gray-750 text-light rounded-full flex items-center justify-center transition-all duration-400 hover:bg-gold hover:text-dark hover:-translate-y-1"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="w-10 h-10 bg-gray-750 text-light rounded-full flex items-center justify-center transition-all duration-400 hover:bg-gold hover:text-dark hover:-translate-y-1"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
         
         <div class="contact-form">
           <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <input type="text" placeholder="Subject" required>
-            <textarea placeholder="Your Message" required></textarea>
-            <button type="submit" class="btn">Send Message</button>
+            <input type="text" placeholder="Your Name" class="w-full py-4 px-4 mb-6 border border-gray-300 bg-transparent focus:outline-none focus:border-dark focus:ring-1 focus:ring-dark" required>
+            <input type="email" placeholder="Your Email" class="w-full py-4 px-4 mb-6 border border-gray-300 bg-transparent focus:outline-none focus:border-dark focus:ring-1 focus:ring-dark" required>
+            <input type="text" placeholder="Subject" class="w-full py-4 px-4 mb-6 border border-gray-300 bg-transparent focus:outline-none focus:border-dark focus:ring-1 focus:ring-dark" required>
+            <textarea placeholder="Your Message" class="w-full py-4 px-4 mb-6 border border-gray-300 bg-transparent focus:outline-none focus:border-dark focus:ring-1 focus:ring-dark min-h-[150px] resize-y" required></textarea>
+            <button type="submit" class="btn w-full py-4 bg-gold text-dark font-medium tracking-wide relative overflow-hidden z-10 hover:-translate-y-1 hover:shadow-lg transition-all duration-400">Send Message</button>
           </form>
         </div>
       </div>
@@ -1000,43 +392,43 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-container">
-        <div class="footer-col">
-          <h4>2B Luxury Concrete Art</h4>
+  <footer class="bg-dark text-light py-16 md:py-24">
+    <div class="container mx-auto px-4">
+      <div class="footer-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
+        <div class="footer-col text-center md:text-left">
+          <h4 class="font-cormorant text-xl mb-6 relative pb-2">2B Luxury Concrete Art</h4>
           <p>Transforming spaces with bespoke concrete artistry that combines strength, elegance, and innovation.</p>
         </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
+        <div class="footer-col text-center md:text-left">
+          <h4 class="font-cormorant text-xl mb-6 relative pb-2">Quick Links</h4>
           <ul class="footer-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="mb-2"><a href="#home" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">Home</a></li>
+            <li class="mb-2"><a href="#about" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">About Us</a></li>
+            <li class="mb-2"><a href="#services" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">Services</a></li>
+            <li class="mb-2"><a href="#testimonials" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">Testimonials</a></li>
+            <li class="mb-2"><a href="#contact" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">Contact</a></li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h4>Our Services</h4>
+        <div class="footer-col text-center md:text-left">
+          <h4 class="font-cormorant text-xl mb-6 relative pb-2">Our Services</h4>
           <ul class="footer-links">
-            <li><a href="#services">Custom Furniture</a></li>
-            <li><a href="#services">Sculptures</a></li>
-            <li><a href="#services">Architectural Elements</a></li>
-            <li><a href="#services">Consultation</a></li>
+            <li class="mb-2"><a href="#services" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">Custom Furniture</a></li>
+            <li class="mb-2"><a href="#services" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">Sculptures</a></li>
+            <li class="mb-2"><a href="#services" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">Architectural Elements</a></li>
+            <li class="mb-2"><a href="#services" class="text-light/70 hover:text-gold hover:pl-2 transition-all duration-400">Consultation</a></li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h4>Connect With Us</h4>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-pinterest"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <div class="footer-col text-center md:text-left">
+          <h4 class="font-cormorant text-xl mb-6 relative pb-2">Connect With Us</h4>
+          <div class="social-links flex justify-center md:justify-start gap-4">
+            <a href="#" class="w-10 h-10 bg-gray-750 text-light rounded-full flex items-center justify-center transition-all duration-400 hover:bg-gold hover:text-dark hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="w-10 h-10 bg-gray-750 text-light rounded-full flex items-center justify-center transition-all duration-400 hover:bg-gold hover:text-dark hover:-translate-y-1"><i class="fab fa-pinterest"></i></a>
+            <a href="#" class="w-10 h-10 bg-gray-750 text-light rounded-full flex items-center justify-center transition-all duration-400 hover:bg-gold hover:text-dark hover:-translate-y-1"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="w-10 h-10 bg-gray-750 text-light rounded-full flex items-center justify-center transition-all duration-400 hover:bg-gold hover:text-dark hover:-translate-y-1"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
       </div>
-      <div class="copyright">
+      <div class="copyright text-center pt-8 border-t border-light/10 text-light/50 text-sm">
         <p>&copy; 2025 2B Luxury Concrete Art Inc. All rights reserved.</p>
       </div>
     </div>
@@ -1047,9 +439,11 @@
     window.addEventListener('scroll', function() {
       const header = document.getElementById('header');
       if (window.scrollY > 100) {
-        header.classList.add('scrolled');
+        header.classList.add('scrolled', 'py-4');
+        header.classList.remove('py-6');
       } else {
-        header.classList.remove('scrolled');
+        header.classList.remove('scrolled', 'py-4');
+        header.classList.add('py-6');
       }
     });
 
@@ -1059,12 +453,14 @@
     const nav = document.querySelector('nav');
 
     mobileMenuBtn.addEventListener('click', function() {
-      nav.classList.add('active');
+      nav.classList.remove('right-[-100%]');
+      nav.classList.add('right-0');
       document.body.style.overflow = 'hidden';
     });
 
     closeMenuBtn.addEventListener('click', function() {
-      nav.classList.remove('active');
+      nav.classList.remove('right-0');
+      nav.classList.add('right-[-100%]');
       document.body.style.overflow = 'auto';
     });
 
@@ -1072,7 +468,8 @@
     const navLinks = document.querySelectorAll('nav a');
     navLinks.forEach(link => {
       link.addEventListener('click', function() {
-        nav.classList.remove('active');
+        nav.classList.remove('right-0');
+        nav.classList.add('right-[-100%]');
         document.body.style.overflow = 'auto';
       });
     });
@@ -1082,8 +479,9 @@
       const isClickInsideNav = nav.contains(event.target);
       const isClickOnMenuBtn = mobileMenuBtn.contains(event.target);
       
-      if (!isClickInsideNav && !isClickOnMenuBtn && nav.classList.contains('active')) {
-        nav.classList.remove('active');
+      if (!isClickInsideNav && !isClickOnMenuBtn && nav.classList.contains('right-0')) {
+        nav.classList.remove('right-0');
+        nav.classList.add('right-[-100%]');
         document.body.style.overflow = 'auto';
       }
     });
